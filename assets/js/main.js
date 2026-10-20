@@ -52,9 +52,9 @@
         var p=P[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
         var dx=p.x-m.x,dy=p.y-m.y,d=Math.hypot(dx,dy);
         if(d<140){p.x+=dx/d*(140-d)*.04;p.y+=dy/d*(140-d)*.04}
-        x.fillStyle='rgba(53,6,62,.55)';x.beginPath();x.arc(p.x,p.y,p.r,0,6.283);x.fill();
-        for(var k=i+1;k<P.length;k++){var q=P[k],l=Math.hypot(p.x-q.x,p.y-q.y);if(l<120){x.strokeStyle='rgba(53,6,62,'+(.28*(1-l/120))+')';x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.stroke()}}
-        if(d<190){x.strokeStyle='rgba(53,6,62,'+(.5*(1-d/190))+')';x.lineWidth=1.2;x.beginPath();x.moveTo(p.x,p.y);x.lineTo(m.x,m.y);x.stroke();x.lineWidth=1}
+        x.fillStyle='rgba(239,105,39,.55)';x.beginPath();x.arc(p.x,p.y,p.r,0,6.283);x.fill();
+        for(var k=i+1;k<P.length;k++){var q=P[k],l=Math.hypot(p.x-q.x,p.y-q.y);if(l<120){x.strokeStyle='rgba(239,105,39,'+(.28*(1-l/120))+')';x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.stroke()}}
+        if(d<190){x.strokeStyle='rgba(239,105,39,'+(.5*(1-d/190))+')';x.lineWidth=1.2;x.beginPath();x.moveTo(p.x,p.y);x.lineTo(m.x,m.y);x.stroke();x.lineWidth=1}
       }
     }
   }
@@ -288,11 +288,11 @@
     var cv=document.createElement('canvas');cv.id='orb3d';cv.width=cv.height=760;document.body.appendChild(cv);
     var r=new T.WebGLRenderer({canvas:cv,alpha:true,antialias:true});r.setPixelRatio(1);r.setSize(760,760,false);
     var scene=new T.Scene(),cam=new T.PerspectiveCamera(40,1,.1,50);cam.position.z=4.6;
-    var mat=new T.MeshPhysicalMaterial({color:0x35063e,metalness:.25,roughness:.18,clearcoat:1,clearcoatRoughness:.08});
+    var mat=new T.MeshPhysicalMaterial({color:0xEF6927,metalness:.25,roughness:.18,clearcoat:1,clearcoatRoughness:.08});
     var mesh=new T.Mesh(new T.TorusKnotGeometry(.8,.28,180,28,2,3),mat);scene.add(mesh);
     scene.add(new T.AmbientLight(0xffffff,.7));
     var d=new T.DirectionalLight(0xffffff,1.2);d.position.set(3,4,5);scene.add(d);
-    var p1=new T.PointLight(0xf1e8f5,1.6,20);p1.position.set(-4,-2,3);scene.add(p1);
+    var p1=new T.PointLight(0xffd2b8,1.6,20);p1.position.set(-4,-2,3);scene.add(p1);
     var p2=new T.PointLight(0xffffff,1.1,20);p2.position.set(4,-3,-2);scene.add(p2);
     var vel=0,mx=0,my=0,vis=true;
     addEventListener('pointermove',function(e){mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5},{passive:true});

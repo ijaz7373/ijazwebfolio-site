@@ -54,7 +54,7 @@ const layout = (file, title, desc, rawBody) => { const body = decorate(rawBody);
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${title} | Ijaz Web Folio</title>
 <meta name="description" content="${desc}">
-<meta name="theme-color" content="#35063e"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2335063e'/%3E%3Ccircle cx='23' cy='22' r='4' fill='%23ffffff'/%3E%3Cpath d='M8 8h4v16H8z' fill='%23fff'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#EF6927"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23EF6927'/%3E%3Ccircle cx='23' cy='22' r='4' fill='%23ffffff'/%3E%3Cpath d='M8 8h4v16H8z' fill='%23fff'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="assets/css/style.css">
@@ -141,7 +141,7 @@ const gal = () => `
 <div class="gal-row" data-dir="1">${[2, 4, 5, 10, 11, 13, 2, 4].map((n) => `<img src="${img(n, 700)}" alt="" loading="lazy" decoding="async" width="700" height="467">`).join('')}</div></section>`;
 
 const tools = ['Wix Studio', 'WordPress', 'Elementor', 'Shopify Design', 'Shopify Redesign', 'WooCommerce', 'Wix Ecommerce', 'Velo', 'CMS Collections', 'Google Ads', 'Meta Ads', 'Technical SEO', 'Landing Pages', 'Lead Capture', 'Conversion Tracking'];
-const tc = [['#35063e', '#fff'], ['#fff', '#35063e']];
+const tc = [['#EF6927', '#1b1411'], ['#fff', '#1b1411']];
 const play = () => `
 <section class="sec"><div class="wrap head" style="margin-bottom:40px"><span class="eyebrow">Platforms &amp; Tools</span><h2 data-split>The right tools for <em>your project.</em></h2>
 <p class="lead" data-r>I select the tools and methods according to the project, rather than forcing every business into the same solution.</p></div>

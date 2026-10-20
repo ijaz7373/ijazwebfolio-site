@@ -485,3 +485,19 @@ em .w>span{background:var(--g3);-webkit-background-clip:text;background-clip:tex
 .contact-cards{grid-template-columns:repeat(2,1fr)}
 .contact-cards .ln b{word-break:normal;overflow-wrap:anywhere}
 @media(max-width:640px){.contact-cards{grid-template-columns:1fr}}
+
+/* ===== svg icons (replace emoji) ===== */
+.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:-.12em}
+.card .ic{color:#EF6927}.card .ic .i{width:26px;height:26px}.card:hover .ic{color:#fff}
+.dv .i{width:96px;height:96px;stroke-width:1.1}
+.deck-card:nth-child(even) .dv{color:#EF6927}
+.chip b{color:#EF6927}.chip b .i{width:18px;height:18px}
+.contact-cards .ci{color:#EF6927;font-size:0;display:block}.contact-cards .ci .i{width:34px;height:34px}.contact-cards .ln:hover .ci{color:#fff}
+.wa .i{width:20px;height:20px}
+/* real project cards */
+a.pic{display:block}.proj .pic img{object-position:top}
+.mini{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.mini span{font:700 .7rem var(--f-b);letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border-radius:99px;background:#FFE6D8;color:#C4491A}
+.stats.s4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:760px){.stats.s4{grid-template-columns:repeat(2,1fr)}}
+.ovl li a{font-size:clamp(2rem,5.2vw,4.4rem)}

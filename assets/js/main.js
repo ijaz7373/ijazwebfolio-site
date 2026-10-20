@@ -250,7 +250,7 @@
     });
     /* photo trail follows the cursor over the final call-to-action */
     if(fine)$$('.cta').forEach(function(sec){
-      var n=[1,4,6,7,8,5,2,11],k=0,last={x:-999,y:-999};
+      var n=[35,36,37,38,39,40],k=0,last={x:-999,y:-999};
       sec.addEventListener('pointermove',function(e){
         var r=sec.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
         if(Math.hypot(x-last.x,y-last.y)<110)return;last={x:x,y:y};
@@ -265,7 +265,7 @@
       /* touch screens have no cursor: letters ripple on their own, photos pop up on the call-to-action */
       gsap.to($$('.hero h1 .ch'),{y:-9,rotation:function(i){return i%2?2.5:-2.5},duration:1.1,ease:'sine.inOut',yoyo:true,repeat:-1,delay:heroDelay/1000+1.3,stagger:{each:.07,repeat:-1,yoyo:true}});
       $$('.cta').forEach(function(sec){
-        var n=[1,4,6,7,8,5,2,11],k=0,iv;
+        var n=[35,36,37,38,39,40],k=0,iv;
         ScrollTrigger.create({trigger:sec,start:'top 70%',end:'bottom 30%',onToggle:function(s){
           clearInterval(iv);if(!s.isActive)return;
           iv=setInterval(function(){

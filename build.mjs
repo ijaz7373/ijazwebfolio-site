@@ -55,7 +55,7 @@ const iconize = (html) => html.replace(/\uFE0F/g, '').replace(emojiRe, (m) => sv
 
 const nav = (cur) => `
 <header class="nav"><div class="pill">
-  <a class="logo" href="index.html" aria-label="Ijaz Web Folio home">ijaz<span>.</span>webfolio</a>
+  <a class="logo" href="index.html" aria-label="Ijaz home">Ijaz<span>.</span></a>
   <button class="mbtn" aria-expanded="false" aria-controls="ovl">Menu <i></i></button>
 </div></header>
 <div class="ovl" id="ovl"><div class="wrap ovl-in">

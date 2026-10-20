@@ -536,7 +536,8 @@ out['wix-white-label.html'] = layout('wix-white-label.html', 'Wix White Label Se
   ]), 'dark') +
   `<section class="sec sand"><div class="wrap head" style="margin-bottom:0"><span class="eyebrow">Recent Work</span><h2 data-split>Live projects, <em>white label.</em></h2>
     <p class="lead" data-r>Websites built and delivered across interiors, home services, design studios and tech, each one a white-label product presented under the client's brand.</p>
-    <div class="row" data-r><a class="btn btn-p" href="portfolio.html">See the live projects</a></div></div></section>` +
+    <div class="note" data-r>These are my older projects. Please <a href="contact.html" style="text-decoration:underline;font-weight:700">contact me</a> for links to my newer work.</div>
+    <div class="row" data-r><a class="btn btn-p" href="portfolio.html">See the live projects</a><a class="btn btn-g" href="${WA_MSG}" target="_blank" rel="noopener">Ask for new work links</a></div></div></section>` +
   checks({
     eye: 'Pricing Philosophy', h2: 'Rates built for <em>agency margins.</em>',
     intro: "I don't charge agency rates, I charge partner rates. Whether you're handling a single overflow project or building a reliable outsource channel, my pricing keeps your margins healthy and your clients happy.",

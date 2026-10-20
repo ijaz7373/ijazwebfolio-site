@@ -54,7 +54,7 @@ const layout = (file, title, desc, rawBody) => { const body = decorate(rawBody);
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${title} | Ijaz Web Folio</title>
 <meta name="description" content="${desc}">
-<meta name="theme-color" content="#35063e"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2335063e'/%3E%3Ccircle cx='23' cy='22' r='4' fill='%239078c0'/%3E%3Cpath d='M8 8h4v16H8z' fill='%23fff'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#35063e"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2335063e'/%3E%3Ccircle cx='23' cy='22' r='4' fill='%23ffffff'/%3E%3Cpath d='M8 8h4v16H8z' fill='%23fff'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="assets/css/style.css">
@@ -141,11 +141,16 @@ const gal = () => `
 <div class="gal-row" data-dir="1">${[2, 4, 5, 10, 11, 13, 2, 4].map((n) => `<img src="${img(n, 700)}" alt="" loading="lazy" decoding="async" width="700" height="467">`).join('')}</div></section>`;
 
 const tools = ['Wix Studio', 'WordPress', 'Elementor', 'Shopify Design', 'Shopify Redesign', 'WooCommerce', 'Wix Ecommerce', 'Velo', 'CMS Collections', 'Google Ads', 'Meta Ads', 'Technical SEO', 'Landing Pages', 'Lead Capture', 'Conversion Tracking'];
-const tc = [['#35063e', '#fff'], ['#602f6b', '#fff'], ['#7851a9', '#fff'], ['#9078c0', '#fff'], ['#fff', '#35063e']];
+const tc = [['#35063e', '#fff'], ['#fff', '#35063e']];
 const play = () => `
 <section class="sec"><div class="wrap head" style="margin-bottom:40px"><span class="eyebrow">Platforms &amp; Tools</span><h2 data-split>The right tools for <em>your project.</em></h2>
 <p class="lead" data-r>I select the tools and methods according to the project, rather than forcing every business into the same solution.</p></div>
-<div class="wrap"><div class="play">${tools.map((t, i) => `<span class="pill-t" style="--c:${tc[i % 5][0]};--tc:${tc[i % 5][1]}">${t}</span>`).join('')}</div><p class="hint">✋ Grab a tag and throw it around</p></div></section>`;
+<div class="wrap"><div class="play">${tools.map((t, i) => `<span class="pill-t" style="--c:${tc[i % 2][0]};--tc:${tc[i % 2][1]}">${t}</span>`).join('')}</div><p class="hint">✋ Grab a tag and throw it around</p></div></section>`;
+
+const zoom = () => `
+<section class="zoom" aria-label="Build. Market. Grow."><div class="zoom-pin"><img class="zoom-img" src="${img(5)}" alt="" loading="lazy" decoding="async" width="1400" height="933">
+  <div class="zoom-mask" aria-hidden="true"><div class="zoom-k">One connected strategy</div><h2 class="zoom-t">GR<span>O</span>W</h2></div>
+  <div class="zoom-cap"><h2>Your website is just the beginning.</h2><p>Your website and marketing should support each other. I help connect the pieces so your digital efforts work toward shared objectives.</p></div></div></section>`;
 
 const ico = ['🌐', '🔎', '📣', '🎯', '⚡', '💬'];
 
@@ -172,6 +177,7 @@ out['index.html'] = layout('index.html', 'Build. Market. Grow. — Website Desig
       </div><div class="dots"><i class="on"></i><i></i><i></i></div></div>
     <div class="pin-vis"><div class="card-v"><img src="${img(6)}" alt="" loading="lazy" width="520" height="520"></div><div class="card-v"><img src="${img(2)}" alt="" loading="lazy" width="520" height="520"></div><div class="card-v"><img src="${img(5)}" alt="" loading="lazy" width="520" height="520"></div></div>
   </div></section>` +
+  zoom() +
   gal() +
   deck({
     icons: ico,

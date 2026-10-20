@@ -12,24 +12,16 @@ const pages = [
 ];
 
 const nav = (cur) => `
-<header class="nav"><div class="wrap">
+<header class="nav"><div class="pill">
   <a class="logo" href="index.html" aria-label="Ijaz Web Folio home">ijaz<span>.</span>webfolio</a>
-  <nav><ul class="menu" id="menu">
-    <li><a href="index.html" class="${cur === 'index.html' ? 'on' : ''}">Home</a></li>
-    <li><a href="about.html" class="${cur === 'about.html' ? 'on' : ''}">About</a></li>
-    <li><a href="website-design.html" class="${['website-design.html', 'seo.html', 'paid-advertising.html', 'lead-generation.html'].includes(cur) ? 'on' : ''}">Services ▾</a>
-      <div class="drop">
-        <a href="website-design.html">Website Design &amp; Development</a>
-        <a href="seo.html">SEO</a>
-        <a href="paid-advertising.html">Google &amp; Meta Ads</a>
-        <a href="lead-generation.html">Lead Generation</a>
-      </div></li>
-    <li><a href="portfolio.html" class="${cur === 'portfolio.html' ? 'on' : ''}">Portfolio</a></li>
-    <li><a href="contact.html" class="${cur === 'contact.html' ? 'on' : ''}">Contact</a></li>
-  </ul></nav>
-  <a class="btn btn-p sm" href="contact.html">Let's Talk</a>
-  <button class="burger" aria-label="Menu" aria-expanded="false"><i></i></button>
-</div></header>`;
+  <button class="mbtn" aria-expanded="false" aria-controls="ovl">Menu <i></i></button>
+</div></header>
+<div class="ovl" id="ovl"><div class="wrap ovl-in">
+  <ul>${pages.map(([h, t], i) => `<li style="--i:${i}"><a href="${h}" class="${h === cur ? 'on' : ''}"><small>0${i + 1}</small>${t}</a></li>`).join('')}</ul>
+  <div class="ovl-side"><h4>Services</h4><a href="website-design.html">Website Design &amp; Development</a><a href="seo.html">Search Engine Optimization</a><a href="paid-advertising.html">Google &amp; Meta Ads</a><a href="lead-generation.html">Lead Generation</a>
+    <a class="btn btn-p" href="contact.html">Start a Project</a>
+    <h4>Connect</h4><a href="mailto:${EMAIL}">${EMAIL}</a><a href="${LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a></div>
+</div></div>`;
 
 const footer = `
 <footer><div class="wrap">
@@ -73,6 +65,7 @@ ${nav(file)}
 <main>${body}</main>
 ${footer}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="assets/js/main.js" defer></script>
 </body></html>`; };
@@ -98,7 +91,7 @@ const marquee = (words) => { const w = words.map((x) => `<span>${x}</span>`).joi
 
 const story = ({ eye, h2, ps, src, badge, rev, cls = '', cta = '' }) => `
 <section class="sec ${cls}"><div class="wrap split ${rev ? 'rev' : ''}">
-  <div><span class="eyebrow">${eye}</span><h2 data-split>${h2}</h2>${ps.map((p) => `<p data-r class="lead">${p}</p>`).join('')}${cta ? `<div class="row" data-r>${cta}</div>` : ''}</div>
+  <div><span class="eyebrow">${eye}</span><h2 data-split>${h2}</h2>${ps.map((p) => `<p data-scrub class="lead">${p}</p>`).join('')}${cta ? `<div class="row" data-r>${cta}</div>` : ''}</div>
   <div class="media">${badge ? `<span class="badge">${badge}</span>` : ''}<img src="${img(src)}" alt="" loading="lazy" decoding="async" width="1400" height="1750"></div>
 </div></section>`;
 
@@ -130,7 +123,7 @@ const cta = (h2, p, c1, c2) => `
   <div class="row" data-r>${c1}${c2 || ''}</div></div></section>`;
 
 const projCard = (i, src) => `
-<article class="proj"><div class="pic"><img src="${img(src, 900)}" alt="" loading="lazy" decoding="async" width="900" height="675"><span>PLATFORM</span></div>
+<article class="proj" data-cursor="View"><div class="pic"><img src="${img(src, 900)}" alt="" loading="lazy" decoding="async" width="900" height="675"><span>PLATFORM</span></div>
   <div class="txt"><h3>Project Name 0${i}</h3><small>Industry · Services delivered</small>
   <p style="opacity:.75">A brief project overview goes here.</p><a class="more" href="portfolio.html">View Project</a></div></article>`;
 

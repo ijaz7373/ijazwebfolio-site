@@ -11,24 +11,16 @@
 </head><body>
 <div id="bar"></div><div id="cur"></div>
 
-<header class="nav"><div class="wrap">
+<header class="nav"><div class="pill">
   <a class="logo" href="index.html" aria-label="Ijaz Web Folio home">ijaz<span>.</span>webfolio</a>
-  <nav><ul class="menu" id="menu">
-    <li><a href="index.html" class="">Home</a></li>
-    <li><a href="about.html" class="">About</a></li>
-    <li><a href="website-design.html" class="on">Services ▾</a>
-      <div class="drop">
-        <a href="website-design.html">Website Design &amp; Development</a>
-        <a href="seo.html">SEO</a>
-        <a href="paid-advertising.html">Google &amp; Meta Ads</a>
-        <a href="lead-generation.html">Lead Generation</a>
-      </div></li>
-    <li><a href="portfolio.html" class="">Portfolio</a></li>
-    <li><a href="contact.html" class="">Contact</a></li>
-  </ul></nav>
-  <a class="btn btn-p sm" href="contact.html">Let's Talk</a>
-  <button class="burger" aria-label="Menu" aria-expanded="false"><i></i></button>
+  <button class="mbtn" aria-expanded="false" aria-controls="ovl">Menu <i></i></button>
 </div></header>
+<div class="ovl" id="ovl"><div class="wrap ovl-in">
+  <ul><li style="--i:0"><a href="index.html" class=""><small>01</small>Home</a></li><li style="--i:1"><a href="about.html" class=""><small>02</small>About</a></li><li style="--i:2"><a href="website-design.html" class=""><small>03</small>Website Design</a></li><li style="--i:3"><a href="seo.html" class="on"><small>04</small>SEO</a></li><li style="--i:4"><a href="paid-advertising.html" class=""><small>05</small>Paid Advertising</a></li><li style="--i:5"><a href="lead-generation.html" class=""><small>06</small>Lead Generation</a></li><li style="--i:6"><a href="portfolio.html" class=""><small>07</small>Portfolio</a></li><li style="--i:7"><a href="contact.html" class=""><small>08</small>Contact</a></li></ul>
+  <div class="ovl-side"><h4>Services</h4><a href="website-design.html">Website Design &amp; Development</a><a href="seo.html">Search Engine Optimization</a><a href="paid-advertising.html">Google &amp; Meta Ads</a><a href="lead-generation.html">Lead Generation</a>
+    <a class="btn btn-p" href="contact.html">Start a Project</a>
+    <h4>Connect</h4><a href="mailto:hello@ijazwebfolio.com">hello@ijazwebfolio.com</a><a href="https://www.linkedin.com/in/ijaz-akram-244150263/" target="_blank" rel="noopener">LinkedIn</a></div>
+</div></div>
 <main>
 <section class="hero short">
   <div class="fx"><i class="s c" style="width:80px;height:80px;left:49%;top:56%" data-speed="-.6"></i><i class="s q o" style="width:60px;height:60px;left:46%;top:12%" data-speed=".8" data-rot="120"></i><i class="s p" style="width:44px;height:44px;left:40%;bottom:12%" data-speed="-.9" data-rot="180"></i><i class="s c pk" style="width:26px;height:26px;left:8%;bottom:20%" data-speed=".5"></i><i class="s z" style="right:6%;bottom:10%" data-speed="-.4"></i></div>
@@ -80,7 +72,7 @@
     <div class="step" data-r><div class="dot">05</div><div><h3>Monitor</h3><p>Review available performance data and identify the next opportunities for improvement.</p></div></div></div>
 </div></section>
 <section class="sec "><div class="fx"><i class="s r" style="width:200px;height:200px;left:-60px;top:10%" data-speed="0.5" data-rot="90"></i><i class="s p" style="width:50px;height:50px;right:8%;bottom:14%" data-speed="-0.9" data-rot="180"></i><i class="s c pk" style="width:34px;height:34px;right:20%;top:12%" data-speed="0.6"></i></div><div class="wrap split ">
-  <div><span class="eyebrow">SEO That Supports Business Goals</span><h2 data-split>Visibility matters when it reaches <em>the right audience.</em></h2><p data-r class="lead">The aim isn't simply to attract more traffic. It's to help relevant people discover your business and find the information they need.</p><p data-r class="lead">Depending on your business, success may involve stronger rankings for relevant searches, increased organic visits, more service-page engagement, or additional qualified inquiries.</p><p data-r class="lead">SEO takes time, and no responsible provider can guarantee specific rankings or timelines.</p></div>
+  <div><span class="eyebrow">SEO That Supports Business Goals</span><h2 data-split>Visibility matters when it reaches <em>the right audience.</em></h2><p data-scrub class="lead">The aim isn't simply to attract more traffic. It's to help relevant people discover your business and find the information they need.</p><p data-scrub class="lead">Depending on your business, success may involve stronger rankings for relevant searches, increased organic visits, more service-page engagement, or additional qualified inquiries.</p><p data-scrub class="lead">SEO takes time, and no responsible provider can guarantee specific rankings or timelines.</p></div>
   <div class="media"><span class="badge">Quality over volume</span><img src="assets/img/p02.webp" alt="" loading="lazy" decoding="async" width="1400" height="1750"></div>
 </div></section>
 <div class="band " aria-hidden="true"><div class="t" data-dir="-1"><span>Design · Market · Grow</span><span>Design · Market · Grow</span><span>Design · Market · Grow</span></div></div><div class="band f" aria-hidden="true"><div class="t" data-dir="1"><span>Build · Rank · Convert</span><span>Build · Rank · Convert</span><span>Build · Rank · Convert</span></div></div><section class="sec cta"><div class="fx"><i class="s q" style="width:110px;height:110px;right:3%;bottom:8%" data-speed="-0.6" data-rot="40"></i><i class="s c am" style="width:30px;height:30px;left:6%;top:14%" data-speed="0.9"></i><i class="s z" style="right:12%;top:8%" data-speed="-0.4"></i></div><div class="wrap"><h2 data-split>Let's improve your website's search visibility.</h2><p data-r>Start with a conversation about your website, your target audience, and the search opportunities that matter to your business.</p>
@@ -98,6 +90,7 @@
   <div class="copy"><span>© 2026 Ijaz — Website Design &amp; Digital Growth</span><span>Build. Market. Grow.</span></div>
 </div></footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="assets/js/main.js" defer></script>
 </body></html>

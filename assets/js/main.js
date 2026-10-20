@@ -293,8 +293,8 @@
     'requestIdleCallback'in window?requestIdleCallback(go,{timeout:3000}):setTimeout(go,1500);
   }
   /* three.js scene: scattered dots assemble into a ring, a sphere, then a knot as you scroll */
-  function initStage(T){
-    var cv=$('.stage-cv'),host=cv.parentNode,sec=$('.stage'),labs=$$('.stage-lab',sec);
+  function initStage(T,sec){
+    var cv=$('.stage-cv',sec),host=cv.parentNode,labs=$$('.stage-lab',sec),names=(sec.dataset.shapes||'ring,sphere,knot').split(',');
     var r=new T.WebGLRenderer({canvas:cv,alpha:true,antialias:true});r.setPixelRatio(Math.min(devicePixelRatio||1,1.5));
     var scene=new T.Scene(),cam=new T.PerspectiveCamera(45,1,.1,100);cam.position.set(0,0,12);
     var N=96,inst=new T.InstancedMesh(new T.IcosahedronGeometry(.24,2),new T.MeshStandardMaterial({color:0xffffff,roughness:.22,metalness:.15}),N);scene.add(inst);
@@ -302,17 +302,26 @@
     for(var i=0;i<N;i++)inst.setColorAt(i,col.setHex(cols[i%cols.length]));
     scene.add(new T.AmbientLight(0xffffff,.85));var dl=new T.DirectionalLight(0xffffff,1.3);dl.position.set(4,6,8);scene.add(dl);
     var pl=new T.PointLight(0xEF6927,1.4,30);pl.position.set(-6,-3,5);scene.add(pl);
-    var sc=[],rg=[],sp=[],kn=[],ga=Math.PI*(3-Math.sqrt(5));
-    for(i=0;i<N;i++){
-      sc.push([(Math.random()-.5)*20,(Math.random()-.5)*12,(Math.random()-.5)*10]);
-      var a=i/N*6.2832;rg.push([Math.cos(a)*3.8,Math.sin(a)*3.8,Math.sin(a*3)*.6]);
-      var y=1-(i/(N-1))*2,rr=Math.sqrt(1-y*y),th=ga*i;sp.push([Math.cos(th)*rr*3.1,y*3.1,Math.sin(th)*rr*3.1]);
-      var t=i/N*6.2832,k=Math.cos(3*t)+2;kn.push([k*Math.cos(2*t)*1.35,k*Math.sin(2*t)*1.35,-Math.sin(3*t)*1.35]);
-    }
-    var sets=[sc,rg,sp,kn],d=new T.Object3D(),P=0,mx=0,my=0,vis=false,tm=0;
+    var ga=Math.PI*(3-Math.sqrt(5));
+    var GEN={
+      scatter:function(i){return[(Math.random()-.5)*20,(Math.random()-.5)*12,(Math.random()-.5)*10]},
+      ring:function(i){var a=i/N*6.2832;return[Math.cos(a)*3.8,Math.sin(a)*3.8,Math.sin(a*3)*.6]},
+      sphere:function(i){var y=1-(i/(N-1))*2,rr=Math.sqrt(1-y*y),th=ga*i;return[Math.cos(th)*rr*3.1,y*3.1,Math.sin(th)*rr*3.1]},
+      knot:function(i){var t=i/N*6.2832,k=Math.cos(3*t)+2;return[k*Math.cos(2*t)*1.35,k*Math.sin(2*t)*1.35,-Math.sin(3*t)*1.35]},
+      helix:function(i){var t=i/N*12.566+(i%2)*3.1416;return[Math.cos(t)*2,(i/N-.5)*8,Math.sin(t)*2]},
+      cube:function(i){return[((i%4)-1.5)*1.25,(Math.floor(i/4)%4-1.5)*1.25,(Math.floor(i/16)-2.5)*1.25]},
+      funnel:function(i){var l=Math.floor(i/12),a=(i%12)/12*6.2832+l*.4;return[Math.cos(a)*(3.8*(1-l/8)+.4),3.2-l*.9,Math.sin(a)*(3.8*(1-l/8)+.4)]},
+      wave:function(i){var x=i%12,y=Math.floor(i/12);return[(x-5.5)*.75,Math.sin(x*.6+y*.7)*.9,(y-3.5)*.85]},
+      spiral:function(i){var t=i/N*18.85,r=.3+i/N*4.3;return[Math.cos(t)*r,Math.sin(i*5)*.35,Math.sin(t)*r]},
+      torus:function(i){var v=(i%16)/16*6.2832,u=Math.floor(i/16)/6*6.2832;return[(2.8+Math.cos(v))*Math.cos(u),Math.sin(v)*1.0,(2.8+Math.cos(v))*Math.sin(u)]},
+      bars:function(i){var cnt=[4,6,8,10,12,14,18,24],k=0,rem=i;while(rem>=cnt[k]){rem-=cnt[k];k++}return[(k-3.5)*1.05,rem*.28-2.2,(rem%2)*.3]}
+    };
+    var order=['scatter'].concat(names),sets=order.map(function(nm){var g=GEN[nm]||GEN.ring,arr=[];for(var i=0;i<N;i++)arr.push(g(i));return arr});
+    var nSeg=sets.length-1;
+    var d=new T.Object3D(),P=0,mx=0,my=0,vis=false,tm=0;
     function sm(x){return x*x*(3-2*x)}
     function draw(){
-      var seg=Math.min(2.999,P*3),s0=Math.floor(seg),t0=seg-s0,A=sets[s0],B=sets[s0+1];
+      var seg=Math.min(nSeg-.001,P*nSeg),s0=Math.floor(seg),t0=seg-s0,A=sets[s0],B=sets[s0+1];
       for(var i=0;i<N;i++){
         var l=sm(Math.max(0,Math.min(1,t0*1.5-(i/N)*.5)));
         d.position.set(A[i][0]+(B[i][0]-A[i][0])*l,A[i][1]+(B[i][1]-A[i][1])*l,A[i][2]+(B[i][2]-A[i][2])*l);
@@ -327,7 +336,7 @@
     new IntersectionObserver(function(en){vis=en[0].isIntersecting}).observe(host);
     (function loop(){requestAnimationFrame(loop);if(!vis||document.hidden)return;tm+=.016;draw();r.render(scene,cam)})();
     gsap.matchMedia().add('(min-width:901px)',function(){
-      ScrollTrigger.create({trigger:sec,start:'top top',end:'+=320%',pin:true,scrub:true,refreshPriority:8,onUpdate:function(s){P=s.progress;var n=Math.min(2,Math.floor(P*3));labs.forEach(function(l,k){l.classList.toggle('on',k===n)})}});
+      ScrollTrigger.create({trigger:sec,start:'top top',end:'+=320%',pin:true,scrub:true,refreshPriority:8,onUpdate:function(s){P=s.progress;var n=Math.min(nSeg-1,Math.floor(P*nSeg));labs.forEach(function(l,k){l.classList.toggle('on',k===n)})}});
     });
     ScrollTrigger.refresh();
   }
@@ -353,7 +362,7 @@
       r.render(scene,cam);
     })();
     /* choose a spot per section, alternating sides */
-    if($('.stage-cv'))initStage(T);
+    $$('.stage').forEach(function(s){initStage(T,s)});
     var secs=$$('main > section'),w=function(){return innerWidth},h=function(){return innerHeight},S=240;
     function target(i){
       if(i===0)return{x:w()*.57,y:h()*.66,scale:.55,rotate:0};

@@ -49,7 +49,7 @@ const decorate = (body, file) => body
   .replace(/(<section class="(?:sec|pin)[^"]*">)/g, (m) => m + fx())
   .replace('<section class="sec cta">', band(bandWords[0], '') + band(bandWords[1], 'f') + '<section class="sec cta">');
 
-const layout = (file, title, desc, rawBody) => { let body = decorate(rawBody, file); if (zoomFor[file]) body = body.replace('</section>', '</section>' + zoom(zoomFor[file])); return `<!doctype html>
+const layout = (file, title, desc, rawBody) => { let body = decorate(rawBody, file); if (zoomFor[file]) body = body.replace('</section>', '</section>' + zoom(zoomFor[file]) + (stageFor[file] ? stage(stageFor[file]) : '')); return `<!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${title} | Ijaz Web Folio</title>
@@ -165,11 +165,18 @@ const zoomFor = {
   'portfolio.html': { word: 'WORK', idx: 1, kicker: 'Selected work', h: 'Ideas turned into digital experiences.', p: 'Each project reflects a unique combination of business requirements, design decisions, user experience, and technical implementation.', src: 7, scale: 24 },
 };
 
-const stage = () => `
-<section class="stage"><div class="stage-pin"><canvas class="stage-cv" aria-hidden="true"></canvas>
-  <div class="stage-copy"><span class="eyebrow">One connected strategy</span><h2 data-split>Every piece, <em>working together.</em></h2>
-  <p class="lead">Your website and marketing should support each other. I help connect the pieces so your digital efforts work toward shared objectives.</p></div>
-  <div class="stage-labs"><span class="stage-lab on">Design</span><span class="stage-lab">Visibility</span><span class="stage-lab">Conversion</span></div></div></section>`;
+const stage = ({ eye = 'One connected strategy', h = 'Every piece, <em>working together.</em>', p = 'Your website and marketing should support each other. I help connect the pieces so your digital efforts work toward shared objectives.', labels = ['Design', 'Visibility', 'Conversion'], shapes = ['ring', 'sphere', 'knot'] } = {}) => `
+<section class="stage" data-shapes="${shapes.join(',')}"><div class="stage-pin"><canvas class="stage-cv" aria-hidden="true"></canvas>
+  <div class="stage-copy"><span class="eyebrow">${eye}</span><h2 data-split>${h}</h2>
+  <p class="lead">${p}</p></div>
+  <div class="stage-labs">${labels.map((l, i) => `<span class="stage-lab${i ? '' : ' on'}">${l}</span>`).join('')}</div></div></section>`;
+const stageFor = {
+  'about.html': { eye: 'My Approach', h: 'Understand first, <em>then build.</em>', p: 'My approach is to understand what needs to improve, recommend a practical direction, and focus on work that serves a clear purpose.', labels: ['Understand', 'Recommend', 'Deliver'], shapes: ['spiral', 'helix', 'sphere'] },
+  'website-design.html': { eye: 'My Process', h: 'From first call <em>to launch day.</em>', p: 'Discovery, structure, design, testing and launch, shaped around the scope and complexity of your project.', labels: ['Discovery', 'Design & build', 'Launch'], shapes: ['wave', 'cube', 'sphere'] },
+  'seo.html': { eye: 'My SEO Approach', h: 'Strong foundations, <em>steady growth.</em>', p: 'Review the website, identify opportunities, and organize recommendations into a practical action plan.', labels: ['Audit', 'Prioritize', 'Monitor'], shapes: ['spiral', 'bars', 'ring'] },
+  'paid-advertising.html': { eye: 'A Practical Campaign Process', h: 'Every part of the campaign <em>working together.</em>', p: 'Audience targeting, campaign structure, messaging, landing pages, tracking, and ongoing optimization all play a role.', labels: ['Audience', 'Message', 'Measurement'], shapes: ['torus', 'funnel', 'sphere'] },
+  'lead-generation.html': { eye: 'Marketing Funnel Alignment', h: 'Visitors in, <em>leads out.</em>', p: 'Connect ads, landing pages, and follow-up actions into a more consistent customer journey.', labels: ['Visit', 'Engage', 'Inquire'], shapes: ['wave', 'funnel', 'ring'] },
+};
 
 const ringImgs = [4, 7, 8, 2, 5, 11, 6, 9, 10, 3, 1, 4];
 const ring = () => `

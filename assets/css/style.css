@@ -469,3 +469,19 @@ em .w>span{background:var(--g3);-webkit-background-clip:text;background-clip:tex
 .deck-card:nth-child(odd) p{font-weight:500}
 
 @media(hover:none){.ch{transition:none}.card:active,.btn:active,.proj:active{transform:scale(.98)}}
+
+/* contact cards + floating whatsapp */
+.contact-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.contact-cards .ln{position:relative;display:flex;flex-direction:column;gap:6px;padding:32px 28px;border-radius:var(--r);background:var(--gl);border:1px solid var(--line);transition:transform .35s var(--ease),box-shadow .35s,background .35s,color .35s}
+.contact-cards .ln .ci{font-size:2rem;margin-bottom:18px}
+.contact-cards .ln small{letter-spacing:.14em;text-transform:uppercase;font-size:.74rem;opacity:.7}
+.contact-cards .ln b{font:800 clamp(1.2rem,2.2vw,1.6rem)/1.2 var(--f-d);word-break:break-word}
+.contact-cards .ln i{font-style:normal;font-weight:700;margin-top:14px;color:#C4491A}
+.contact-cards .ln:hover{background:var(--g1);color:#fff;transform:translateY(-6px);box-shadow:0 30px 60px -28px rgba(239,105,39,.7)}
+.contact-cards .ln:hover i{color:#fff}
+.wa{position:fixed;right:18px;bottom:18px;z-index:90;display:inline-flex;align-items:center;gap:8px;padding:13px 20px;border-radius:99px;background:var(--g1);color:#fff;font:700 .95rem var(--f-b);box-shadow:0 14px 34px -10px rgba(239,105,39,.8);transition:transform .3s var(--ease)}
+.wa:hover{transform:translateY(-4px) scale(1.04)}
+@media(max-width:560px){.wa span{display:none}.wa{padding:14px 16px;font-size:1.2rem}}
+.contact-cards{grid-template-columns:repeat(2,1fr)}
+.contact-cards .ln b{word-break:normal;overflow-wrap:anywhere}
+@media(max-width:640px){.contact-cards{grid-template-columns:1fr}}

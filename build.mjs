@@ -1,7 +1,9 @@
 // Static page generator: `node build.mjs` writes all .html files next to this script.
 import { writeFileSync } from 'node:fs';
 
-const EMAIL = 'hello@ijazwebfolio.com'; // TODO: replace with your preferred business email
+const EMAIL = 'info@ijazwebfolio.com';
+const WA = 'https://wa.me/923051925258';
+const WA_TXT = '+92 305 1925258';
 const LINKEDIN = 'https://www.linkedin.com/in/ijaz-akram-244150263/';
 const img = (n, w = 1400) => `assets/img/p${String(n).padStart(2, '0')}.webp`;
 
@@ -20,7 +22,7 @@ const nav = (cur) => `
   <ul>${pages.map(([h, t], i) => `<li style="--i:${i}"><a href="${h}" class="${h === cur ? 'on' : ''}"><small>0${i + 1}</small>${t}</a></li>`).join('')}</ul>
   <div class="ovl-side"><h4>Services</h4><a href="website-design.html">Website Design &amp; Development</a><a href="seo.html">Search Engine Optimization</a><a href="paid-advertising.html">Google &amp; Meta Ads</a><a href="lead-generation.html">Lead Generation</a>
     <a class="btn btn-p" href="contact.html">Start a Project</a>
-    <h4>Connect</h4><a href="mailto:${EMAIL}">${EMAIL}</a><a href="${LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a></div>
+    <h4>Connect</h4><a href="mailto:${EMAIL}">${EMAIL}</a><a href="${WA}" target="_blank" rel="noopener">WhatsApp ${WA_TXT}</a><a href="${LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a></div>
 </div></div>`;
 
 const footer = `
@@ -30,6 +32,7 @@ const footer = `
     <div><h4>Explore</h4><ul>${pages.map(([h, t]) => `<li><a href="${h}">${t}</a></li>`).join('')}</ul></div>
     <div><h4>Connect</h4><ul>
       <li><a href="mailto:${EMAIL}">${EMAIL}</a></li>
+      <li><a href="${WA}" target="_blank" rel="noopener">WhatsApp ${WA_TXT}</a></li>
       <li><a href="${LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a></li>
       <li><a href="https://ijazwebfolio.com">ijazwebfolio.com</a></li></ul></div>
   </div>
@@ -66,6 +69,7 @@ const layout = (file, title, desc, rawBody) => { let body = decorate(rawBody, fi
 ${nav(file)}
 <main>${body}</main>
 ${footer}
+<a class="wa" href="${WA}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">💬 <span>WhatsApp</span></a>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
@@ -443,21 +447,16 @@ const fld = (n, l, t = 'text', req = '', full = '') => `<div class="fld ${full}"
 out['contact.html'] = layout('contact.html', 'Contact', 'Tell me about your project — website design, SEO, Google Ads, Meta Ads and lead generation.',
   hero({
     eye: "LET'S TALK", h1: 'Tell me what you\'re <em>working on.</em>', bg: 11, short: true,
-    ps: ["Have a website project, a marketing challenge, or an idea you'd like to explore?", "Share a few details about your business and goals. I'll review your inquiry and we can discuss the most suitable next steps."],
+    ps: ["Have a website project, a marketing challenge, or an idea you'd like to explore?", "Message me a few details about your business and goals. I'll review them and we can discuss the most suitable next steps."],
   }) +
-  `<section class="sec"><div class="wrap contact">
-    <form class="f" novalidate data-r><h2>Let's discuss your project.</h2>
-      ${fld('name', 'Full Name', 'text', 'required')}${fld('business', 'Business Name')}${fld('email', 'Work Email', 'email', 'required')}${fld('url', 'Website URL (optional)', 'url')}
-      <div class="fld full"><select id="service" name="service" required><option value="">&nbsp;</option>${['Website Design or Redesign', 'Shopify Store Design or Redesign', 'SEO', 'Google Ads', 'Meta Ads', 'Lead Generation', 'Website Conversion Optimization', 'Social Media Marketing', 'Other'].map((o) => `<option>${o}</option>`).join('')}</select><label for="service">What service are you interested in?</label><small>Please choose a service.</small></div>
-      ${fld('budget', 'Estimated Budget (optional)')}${fld('timeline', 'Project Timeline (optional)')}
-      <div class="fld full"><textarea id="msg" name="message" placeholder=" " required></textarea><label for="msg">Tell me about your project</label><small>Please tell me a little about your project.</small></div>
-      <button class="btn btn-p" type="submit">Send Project Inquiry</button>
-      <div class="ok" role="status">Thanks for reaching out. Your inquiry has been submitted, and I'll review the details to determine the next steps.</div></form>
-    <aside class="side" data-r><h2 style="font-size:2rem">Prefer email?</h2><p>You can also contact me directly with a brief overview of your requirements.</p>
-      <a class="ln" href="mailto:${EMAIL}"><small>Email</small><b>${EMAIL}</b></a>
-      <a class="ln" href="https://ijazwebfolio.com"><small>Website</small><b>ijazwebfolio.com</b></a>
-      <a class="ln" href="${LINKEDIN}" target="_blank" rel="noopener"><small>LinkedIn</small><b>Ijaz Akram</b></a></aside>
-  </div></section>` +
+  `<section class="sec"><div class="wrap"><div class="head"><span class="eyebrow">Get in touch</span><h2 data-split>Prefer to <em>talk directly?</em></h2>
+    <p class="lead" data-r>Send me a brief overview of your requirements by email or WhatsApp and I'll review it and get back to you with the most suitable next steps.</p></div>
+    <div class="contact-cards">
+      <a class="ln" data-r href="mailto:${EMAIL}"><span class="ci">✉️</span><small>Email</small><b>${EMAIL}</b><i>Write to me →</i></a>
+      <a class="ln" data-r href="${WA}" target="_blank" rel="noopener"><span class="ci">💬</span><small>WhatsApp</small><b>${WA_TXT}</b><i>Start a chat →</i></a>
+      <a class="ln" data-r href="${LINKEDIN}" target="_blank" rel="noopener"><span class="ci">🔗</span><small>LinkedIn</small><b>Ijaz Akram</b><i>Connect →</i></a>
+      <a class="ln" data-r href="https://ijazwebfolio.com"><span class="ci">🌐</span><small>Website</small><b>ijazwebfolio.com</b><i>Visit →</i></a>
+    </div></div></section>` +
   steps({
     eye: 'What Happens Next?', h2: 'Three simple <em>next steps.</em>', cls: 'dark',
     items: [['I review your inquiry', "I'll look at your requirements and understand what you're hoping to achieve."], ['We discuss your goals', "If the project is a good fit, we'll clarify priorities, scope, and expectations."],

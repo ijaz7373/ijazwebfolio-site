@@ -44,12 +44,25 @@ const footer = `
   <div class="copy"><span>© ${new Date().getFullYear()} Ijaz — Website Design &amp; Digital Growth</span><span>Build. Market. Grow.</span></div>
 </div></footer>`;
 
-const layout = (file, title, desc, body) => `<!doctype html>
+const shapeSets = [
+  [['c', 'width:120px;height:120px;right:5%;top:8%', -.7], ['q o', 'width:70px;height:70px;left:3%;bottom:10%', .8, 160], ['t', 'width:46px;height:46px;left:48%;top:6%', -.5, 200]],
+  [['r', 'width:200px;height:200px;left:-60px;top:10%', .5, 90], ['p', 'width:50px;height:50px;right:8%;bottom:14%', -.9, 180], ['c pk', 'width:34px;height:34px;right:20%;top:12%', .6]],
+  [['q', 'width:110px;height:110px;right:3%;bottom:8%', -.6, 40], ['c am', 'width:30px;height:30px;left:6%;top:14%', .9], ['z', 'right:12%;top:8%', -.4]],
+];
+let fxN = 0;
+const fx = () => { const set = shapeSets[fxN++ % shapeSets.length]; return `<div class="fx">${set.map(([c, st, sp, rot]) => `<i class="s ${c}" style="${st}" data-speed="${sp}"${rot ? ` data-rot="${rot}"` : ''}></i>`).join('')}</div>`; };
+const bandWords = ['Design · Market · Grow', 'Build · Rank · Convert'];
+const band = (w, f) => `<div class="band ${f}" aria-hidden="true"><div class="t" data-dir="${f ? 1 : -1}">${[0, 1, 2].map(() => `<span>${w}</span>`).join('')}</div></div>`;
+const decorate = (body) => body
+  .replace(/(<section class="(?:sec|pin)[^"]*">)/g, (m) => m + fx())
+  .replace('<section class="sec cta">', band(bandWords[0], '') + band(bandWords[1], 'f') + '<section class="sec cta">');
+
+const layout = (file, title, desc, rawBody) => { const body = decorate(rawBody); return `<!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${title} | Ijaz Web Folio</title>
 <meta name="description" content="${desc}">
-<meta name="theme-color" content="#100E0C"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23100E0C'/%3E%3Ccircle cx='23' cy='22' r='4' fill='%23EF6927'/%3E%3Cpath d='M8 8h4v16H8z' fill='%23FFFF00'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#6D28D9"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236D28D9'/%3E%3Ccircle cx='23' cy='22' r='4' fill='%23F472B6'/%3E%3Cpath d='M8 8h4v16H8z' fill='%23fff'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="assets/css/style.css">
@@ -62,19 +75,22 @@ ${footer}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="assets/js/main.js" defer></script>
-</body></html>`;
+</body></html>`; };
 
 /* ---------- section helpers ---------- */
 const btn = (t, h, c = 'btn-p') => `<a class="btn ${c}" href="${h}">${t}</a>`;
+const chips = [['🌐', 'Design'], ['🔎', 'SEO'], ['📣', 'Ads'], ['🎯', 'Leads']];
 const hero = ({ eye, h1, ps, ctas = '', tags, bg, video, short }) => `
 <section class="hero ${short ? 'short' : ''}">
-  <div class="bg"><img src="${img(bg)}" alt="" fetchpriority="high" decoding="async">${video ? '<video muted loop playsinline preload="none" data-src="assets/video/hero.mp4" aria-hidden="true"></video>' : ''}</div>
-  <i class="blob a"></i><i class="blob b"></i>
-  <div class="wrap"><span class="eyebrow">${eye}</span>
+  <div class="fx"><i class="s c" style="width:80px;height:80px;left:49%;top:56%" data-speed="-.6"></i><i class="s q o" style="width:60px;height:60px;left:46%;top:12%" data-speed=".8" data-rot="120"></i><i class="s p" style="width:44px;height:44px;left:40%;bottom:12%" data-speed="-.9" data-rot="180"></i><i class="s c pk" style="width:26px;height:26px;left:8%;bottom:20%" data-speed=".5"></i><i class="s z" style="right:6%;bottom:10%" data-speed="-.4"></i></div>
+  <div class="wrap hero-grid"><div class="hero-copy"><span class="eyebrow">${eye}</span>
     <h1 data-split>${h1}</h1>
-    ${ps.map((p, i) => `<p class="lead" data-r>${p}</p>`).join('')}
+    ${ps.map((p) => `<p class="lead" data-r>${p}</p>`).join('')}
     <div class="row" data-r>${ctas}</div>
     ${tags ? `<div class="tags" data-r>${tags.map((t) => `<span>${t}</span>`).join('')}</div>` : ''}
+  </div>
+  <div class="hero-vis"><i class="s r"></i><div class="frame"><img src="${img(bg)}" alt="" fetchpriority="high" decoding="async" width="1400" height="1750">${video ? '<video muted loop playsinline preload="none" data-src="assets/video/hero.mp4" aria-hidden="true"></video>' : ''}</div>
+    ${chips.map((c, i) => `<span class="chip c${i + 1}" style="--d:${[28, -34, 22, -26][i]}" data-speed="${[.5, -.7, .8, -.4][i]}"><b>${c[0]}</b>${c[1]}</span>`).join('')}</div>
   </div><i class="scrollcue"></i>
 </section>`;
 
@@ -83,7 +99,7 @@ const marquee = (words) => { const w = words.map((x) => `<span>${x}</span>`).joi
 const story = ({ eye, h2, ps, src, badge, rev, cls = '', cta = '' }) => `
 <section class="sec ${cls}"><div class="wrap split ${rev ? 'rev' : ''}">
   <div><span class="eyebrow">${eye}</span><h2 data-split>${h2}</h2>${ps.map((p) => `<p data-r class="lead">${p}</p>`).join('')}${cta ? `<div class="row" data-r>${cta}</div>` : ''}</div>
-  <div class="media" data-r>${badge ? `<span class="badge">${badge}</span>` : ''}<img src="${img(src)}" alt="" loading="lazy" decoding="async" width="1400" height="1750"></div>
+  <div class="media">${badge ? `<span class="badge">${badge}</span>` : ''}<img src="${img(src)}" alt="" loading="lazy" decoding="async" width="1400" height="1750"></div>
 </div></section>`;
 
 const cards = ({ eye, h2, intro, items, cols = '', cls = '', icons }) => `

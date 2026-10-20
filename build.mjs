@@ -54,12 +54,14 @@ const layout = (file, title, desc, rawBody) => { const body = decorate(rawBody);
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${title} | Ijaz Web Folio</title>
 <meta name="description" content="${desc}">
-<meta name="theme-color" content="#6D28D9"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236D28D9'/%3E%3Ccircle cx='23' cy='22' r='4' fill='%23F472B6'/%3E%3Cpath d='M8 8h4v16H8z' fill='%23fff'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#35063e"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2335063e'/%3E%3Ccircle cx='23' cy='22' r='4' fill='%239078c0'/%3E%3Cpath d='M8 8h4v16H8z' fill='%23fff'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="assets/css/style.css">
-<script>document.documentElement.classList.add('js');setTimeout(function(){document.documentElement.classList.add('ready')},3500)</script>
+<script>var h=document.documentElement;h.classList.add('js');try{var z=sessionStorage;if(z.getItem('pre')||z.getItem('wipe'))h.classList.add('nopre');else z.setItem('pre','1');if(z.getItem('wipe')){h.classList.add('wiped');z.removeItem('wipe')}}catch(e){h.classList.add('nopre')}setTimeout(function(){h.classList.add('ready');var p=document.querySelector('.pre');if(p)p.style.display='none'},4500)</script>
 </head><body>
+<div class="pre"><div class="pre-in"><div class="pre-logo">ijaz<span>.</span>webfolio</div><b class="pre-n">0</b></div><i class="pre-bar"></i></div>
+<div class="wipe"><i></i><i></i><i></i><i></i><i></i></div>
 <div id="bar"></div><div id="cur"></div>
 ${nav(file)}
 <main>${body}</main>
@@ -67,6 +69,7 @@ ${footer}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js" defer></script>
 <script src="assets/js/main.js" defer></script>
 </body></html>`; };
 
@@ -127,6 +130,23 @@ const projCard = (i, src) => `
   <div class="txt"><h3>Project Name 0${i}</h3><small>Industry · Services delivered</small>
   <p style="opacity:.75">A brief project overview goes here.</p><a class="more" href="portfolio.html">View Project</a></div></article>`;
 
+const deck = ({ items, icons }) => `
+<section class="sec sand deck"><div class="wrap"><div class="head"><span class="eyebrow">Services</span><h2 data-split>Everything your business needs to <em>grow online.</em></h2></div>
+<div class="deck-list">${items.map((it, i) => `<article class="deck-card" style="--i:${i}"><div><span class="n">0${i + 1} / 0${items.length}</span><h3>${it[0]}</h3><p>${it[1]}</p><a class="more" href="${it[3]}">${it[2]}</a></div><div class="dv">${icons[i]}</div></article>`).join('')}</div></div></section>`;
+
+const gal = () => `
+<section class="sec gal"><div class="wrap head"><span class="eyebrow">Design with purpose</span><h2 data-split>Every decision makes the <em>next step clear.</em></h2>
+<p class="lead" data-r style="margin-inline:auto">Every website decision should support usability, communicate your value, and make the next step clear to visitors.</p></div>
+<div class="gal-row" data-dir="-1">${[1, 6, 7, 8, 9, 3, 1, 6].map((n) => `<img src="${img(n, 700)}" alt="" loading="lazy" decoding="async" width="700" height="467">`).join('')}</div>
+<div class="gal-row" data-dir="1">${[2, 4, 5, 10, 11, 13, 2, 4].map((n) => `<img src="${img(n, 700)}" alt="" loading="lazy" decoding="async" width="700" height="467">`).join('')}</div></section>`;
+
+const tools = ['Wix Studio', 'WordPress', 'Elementor', 'Shopify Design', 'Shopify Redesign', 'WooCommerce', 'Wix Ecommerce', 'Velo', 'CMS Collections', 'Google Ads', 'Meta Ads', 'Technical SEO', 'Landing Pages', 'Lead Capture', 'Conversion Tracking'];
+const tc = [['#35063e', '#fff'], ['#602f6b', '#fff'], ['#7851a9', '#fff'], ['#9078c0', '#fff'], ['#fff', '#35063e']];
+const play = () => `
+<section class="sec"><div class="wrap head" style="margin-bottom:40px"><span class="eyebrow">Platforms &amp; Tools</span><h2 data-split>The right tools for <em>your project.</em></h2>
+<p class="lead" data-r>I select the tools and methods according to the project, rather than forcing every business into the same solution.</p></div>
+<div class="wrap"><div class="play">${tools.map((t, i) => `<span class="pill-t" style="--c:${tc[i % 5][0]};--tc:${tc[i % 5][1]}">${t}</span>`).join('')}</div><p class="hint">✋ Grab a tag and throw it around</p></div></section>`;
+
 const ico = ['🌐', '🔎', '📣', '🎯', '⚡', '💬'];
 
 /* ---------- pages ---------- */
@@ -152,8 +172,9 @@ out['index.html'] = layout('index.html', 'Build. Market. Grow. — Website Desig
       </div><div class="dots"><i class="on"></i><i></i><i></i></div></div>
     <div class="pin-vis"><div class="card-v"><img src="${img(6)}" alt="" loading="lazy" width="520" height="520"></div><div class="card-v"><img src="${img(2)}" alt="" loading="lazy" width="520" height="520"></div><div class="card-v"><img src="${img(5)}" alt="" loading="lazy" width="520" height="520"></div></div>
   </div></section>` +
-  cards({
-    eye: 'Services', h2: 'Everything your business needs to <em>grow online.</em>', icons: ico, cls: 'sand',
+  gal() +
+  deck({
+    icons: ico,
     items: [
       ['Website Design &amp; Development', 'Professional, responsive websites designed to communicate your value, build trust, and encourage visitors to take action.', 'Explore Website Design', 'website-design.html'],
       ['Search Engine Optimization (SEO)', "Improve your website's technical foundation, search visibility, and ability to attract relevant organic traffic.", 'Explore SEO Services', 'seo.html'],
@@ -163,6 +184,7 @@ out['index.html'] = layout('index.html', 'Build. Market. Grow. — Website Desig
       ['Social Media Marketing', 'Build a more consistent online presence and align your social media activity with your wider marketing goals.', 'Discuss Social Media Marketing', 'contact.html'],
     ],
   }) +
+  play() +
   `<section class="sec dark"><div class="wrap">
     <div class="head"><span class="eyebrow">Why Work With Me?</span><h2 data-split>Practical solutions. Clear communication. <em>Business-focused thinking.</em></h2></div>
     <div class="cards c2">
@@ -217,6 +239,7 @@ out['about.html'] = layout('about.html', 'About Ijaz', 'Independent website desi
       'You can expect clear communication, a defined scope, practical guidance, and a focus on the details that matter to your business.',
       'I value long-term working relationships built on trust, transparency, and consistent delivery.'],
   }) +
+  play() +
   cta("Have an idea, a challenge, or a project in mind?", "I'd love to hear what you're working on and explore whether I can help.", btn('Get in Touch', 'contact.html')));
 
 out['website-design.html'] = layout('website-design.html', 'Website Design & Development', 'Responsive, user-friendly websites on Wix Studio, WordPress, Shopify and more — built for your business.',
@@ -227,12 +250,14 @@ out['website-design.html'] = layout('website-design.html', 'Website Design & Dev
     ctas: btn('Discuss Your Website', 'contact.html') + btn('View My Work', 'portfolio.html', 'btn-g'),
   }) +
   cards({
-    eye: 'Website Services', h2: 'The right website solution for <em>your needs.</em>', cls: 'sand', icons: ['🏢', '✨', '🧩', '📝', '🛒', '🎯', '🛠️'],
+    eye: 'Website Services', h2: 'The right website solution for <em>your needs.</em>', cls: 'sand', icons: ['🏢', '✨', '🧩', '📝', '🛒', '🛍️', '🔄', '🎯', '🛠️'],
     items: [['Business Website Design', 'Professional websites that explain your services, establish credibility, and make it easier for potential customers to contact you.'],
       ['Website Redesign', 'Refresh an outdated website with a more modern design, improved structure, clearer messaging, and a better user experience.'],
       ['Wix Studio &amp; Wix Development', 'Custom Wix Studio and Wix Editor websites, CMS collections, dynamic pages, repeaters, responsive layouts, and Velo functionality where required.'],
       ['WordPress &amp; Elementor', 'Flexible WordPress websites, Elementor-based page design, content management, and website improvements tailored to your requirements.'],
       ['Ecommerce Website Development', 'Online stores and product experiences using suitable platforms such as Shopify, WooCommerce, and Wix Ecommerce.'],
+      ['Shopify Store Design', 'Custom Shopify stores built around your products and brand, with clear product pages, easy navigation, and a checkout journey that makes buying simple.'],
+      ['Shopify Store Redesign', 'Refresh an existing Shopify store with a cleaner layout, stronger product presentation, a better mobile experience, and a clearer path from browsing to purchase.'],
       ['Landing Pages', 'Focused landing pages designed around a particular service, offer, campaign, or conversion objective.'],
       ['Website Maintenance', 'Ongoing updates, content changes, troubleshooting, responsive adjustments, and technical support.']],
   }) +
@@ -384,7 +409,7 @@ out['contact.html'] = layout('contact.html', 'Contact', 'Tell me about your proj
   `<section class="sec"><div class="wrap contact">
     <form class="f" novalidate data-r><h2>Let's discuss your project.</h2>
       ${fld('name', 'Full Name', 'text', 'required')}${fld('business', 'Business Name')}${fld('email', 'Work Email', 'email', 'required')}${fld('url', 'Website URL (optional)', 'url')}
-      <div class="fld full"><select id="service" name="service" required><option value="">&nbsp;</option>${['Website Design or Redesign', 'SEO', 'Google Ads', 'Meta Ads', 'Lead Generation', 'Website Conversion Optimization', 'Social Media Marketing', 'Other'].map((o) => `<option>${o}</option>`).join('')}</select><label for="service">What service are you interested in?</label><small>Please choose a service.</small></div>
+      <div class="fld full"><select id="service" name="service" required><option value="">&nbsp;</option>${['Website Design or Redesign', 'Shopify Store Design or Redesign', 'SEO', 'Google Ads', 'Meta Ads', 'Lead Generation', 'Website Conversion Optimization', 'Social Media Marketing', 'Other'].map((o) => `<option>${o}</option>`).join('')}</select><label for="service">What service are you interested in?</label><small>Please choose a service.</small></div>
       ${fld('budget', 'Estimated Budget (optional)')}${fld('timeline', 'Project Timeline (optional)')}
       <div class="fld full"><textarea id="msg" name="message" placeholder=" " required></textarea><label for="msg">Tell me about your project</label><small>Please tell me a little about your project.</small></div>
       <button class="btn btn-p" type="submit">Send Project Inquiry</button>

@@ -45,11 +45,11 @@ let fxN = 0;
 const fx = () => { const set = shapeSets[fxN++ % shapeSets.length]; return `<div class="fx">${set.map(([c, st, sp, rot]) => `<i class="s ${c}" style="${st}" data-speed="${sp}"${rot ? ` data-rot="${rot}"` : ''}></i>`).join('')}</div>`; };
 const bandWords = ['Design · Market · Grow', 'Build · Rank · Convert'];
 const band = (w, f) => `<div class="band ${f}" aria-hidden="true"><div class="t" data-dir="${f ? 1 : -1}">${[0, 1, 2].map(() => `<span>${w}</span>`).join('')}</div></div>`;
-const decorate = (body) => body
+const decorate = (body, file) => body
   .replace(/(<section class="(?:sec|pin)[^"]*">)/g, (m) => m + fx())
   .replace('<section class="sec cta">', band(bandWords[0], '') + band(bandWords[1], 'f') + '<section class="sec cta">');
 
-const layout = (file, title, desc, rawBody) => { const body = decorate(rawBody); return `<!doctype html>
+const layout = (file, title, desc, rawBody) => { let body = decorate(rawBody, file); if (zoomFor[file]) body = body.replace('</section>', '</section>' + zoom(zoomFor[file])); return `<!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${title} | Ijaz Web Folio</title>
@@ -147,10 +147,34 @@ const play = () => `
 <p class="lead" data-r>I select the tools and methods according to the project, rather than forcing every business into the same solution.</p></div>
 <div class="wrap"><div class="play">${tools.map((t, i) => `<span class="pill-t" style="--c:${tc[i % 2][0]};--tc:${tc[i % 2][1]}">${t}</span>`).join('')}</div><p class="hint">✋ Grab a tag and throw it around</p></div></section>`;
 
-const zoom = () => `
-<section class="zoom" aria-label="Build. Market. Grow."><div class="zoom-pin"><img class="zoom-img" src="${img(5)}" alt="" loading="lazy" decoding="async" width="1400" height="933">
-  <div class="zoom-mask" aria-hidden="true"><div class="zoom-k">One connected strategy</div><h2 class="zoom-t">GR<span>O</span>W</h2></div>
-  <div class="zoom-cap"><h2>Your website is just the beginning.</h2><p>Your website and marketing should support each other. I help connect the pieces so your digital efforts work toward shared objectives.</p></div></div></section>`;
+const zoom = ({ word, idx, kicker, h, p, src, scale = 24 }) => {
+  const letters = word.split('').map((ch, i) => (i === idx ? `<span>${ch}</span>` : ch)).join('');
+  const fs = `min(27rem,${(96 / (word.length * 0.66)).toFixed(1)}vw)`;
+  return `
+<section class="zoom" data-scale="${scale}" aria-label="${word}"><div class="zoom-pin"><img class="zoom-img" src="${img(src)}" alt="" loading="lazy" decoding="async" width="1400" height="933">
+  <div class="zoom-mask" aria-hidden="true"><div class="zoom-k">${kicker}</div><h2 class="zoom-t" style="--fs:${fs}">${letters}</h2></div>
+  <div class="zoom-cap"><h2>${h}</h2><p>${p}</p></div></div></section>`;
+};
+const zoomHome = { word: 'GROW', idx: 2, kicker: 'One connected strategy', h: 'Your website is just the beginning.', p: 'Your website and marketing should support each other. I help connect the pieces so your digital efforts work toward shared objectives.', src: 5, scale: 24 };
+const zoomFor = {
+  'about.html': { word: 'HELLO', idx: 4, kicker: 'A little about me', h: 'Good digital work starts with understanding the business.', p: 'Every business has different goals, customers, and challenges.', src: 3, scale: 24 },
+  'website-design.html': { word: 'BUILD', idx: 4, kicker: 'Website design & development', h: 'Design with purpose.', p: 'Every website decision should support usability, communicate your value, and make the next step clear to visitors.', src: 6, scale: 30 },
+  'seo.html': { word: 'FOUND', idx: 1, kicker: 'Search engine optimization', h: 'Build a stronger foundation before chasing rankings.', p: 'SEO is a long-term process, and results depend on factors such as competition, website condition, content quality, and search demand.', src: 10, scale: 24 },
+  'paid-advertising.html': { word: 'ADS', idx: 1, kicker: 'Google Ads & Meta Ads', h: 'Ads are only one part of the equation.', p: 'The offer, the audience, the message, the landing page and the measurement all play a role.', src: 4, scale: 30 },
+  'lead-generation.html': { word: 'CONVERT', idx: 1, kicker: 'Lead generation & conversion', h: 'A clearer path from visitor to customer.', p: 'Small points of friction can create unnecessary barriers. Let\'s find and remove them.', src: 5, scale: 24 },
+  'portfolio.html': { word: 'WORK', idx: 1, kicker: 'Selected work', h: 'Ideas turned into digital experiences.', p: 'Each project reflects a unique combination of business requirements, design decisions, user experience, and technical implementation.', src: 7, scale: 24 },
+};
+
+const stage = () => `
+<section class="stage"><div class="stage-pin"><canvas class="stage-cv" aria-hidden="true"></canvas>
+  <div class="stage-copy"><span class="eyebrow">One connected strategy</span><h2 data-split>Every piece, <em>working together.</em></h2>
+  <p class="lead">Your website and marketing should support each other. I help connect the pieces so your digital efforts work toward shared objectives.</p></div>
+  <div class="stage-labs"><span class="stage-lab on">Design</span><span class="stage-lab">Visibility</span><span class="stage-lab">Conversion</span></div></div></section>`;
+
+const ringImgs = [4, 7, 8, 2, 5, 11, 6, 9, 10, 3, 1, 4];
+const ring = () => `
+<section class="ring"><div class="ring-pin"><div class="wrap head" style="text-align:center;margin-inline:auto"><span class="eyebrow">Project Portfolio</span><h2 data-split>Spin through <em>selected work.</em></h2></div>
+  <div class="ring-scene"><div class="ring-r">${ringImgs.map((n, i) => `<figure class="ring-c" style="--i:${i}"><img src="${img(n, 700)}" alt="" loading="lazy" decoding="async" width="700" height="467"><figcaption><b>Project Name ${String(i + 1).padStart(2, '0')}</b><span>Industry · Platform</span></figcaption></figure>`).join('')}</div></div></div></section>`;
 
 const ico = ['🌐', '🔎', '📣', '🎯', '⚡', '💬'];
 
@@ -177,7 +201,8 @@ out['index.html'] = layout('index.html', 'Build. Market. Grow. — Website Desig
       </div><div class="dots"><i class="on"></i><i></i><i></i></div></div>
     <div class="pin-vis"><div class="card-v"><img src="${img(6)}" alt="" loading="lazy" width="520" height="520"></div><div class="card-v"><img src="${img(2)}" alt="" loading="lazy" width="520" height="520"></div><div class="card-v"><img src="${img(5)}" alt="" loading="lazy" width="520" height="520"></div></div>
   </div></section>` +
-  zoom() +
+  zoom(zoomHome) +
+  stage() +
   gal() +
   deck({
     icons: ico,
@@ -394,6 +419,7 @@ out['portfolio.html'] = layout('portfolio.html', 'Portfolio & Case Studies', 'Se
   `<section class="sec sand"><div class="wrap"><div class="head"><span class="eyebrow">Project Portfolio</span><h2 data-split>Website Design &amp; <em>Development</em></h2>
     <p class="lead" data-r>Selected projects across Wix Studio, WordPress, Shopify, and other platforms. Each card shows the project name, industry, platform, services delivered, an overview, and a link to the live website where available.</p></div>
     <div class="grid-proj dark" style="background:none">${[4, 7, 8, 2, 5, 11].map((s, i) => `<div data-r>${projCard(i + 1, s)}</div>`).join('')}</div></div></section>` +
+  ring() +
   `<section class="sec dark"><div class="wrap"><div class="head"><span class="eyebrow">Case Studies</span><h2 data-split>More than a <em>finished design.</em></h2>
     <p class="lead" data-r>A case study should explain the thinking behind the work, not just display a screenshot.</p></div>
     <div class="tabs" data-r><div class="tablist" role="tablist">${cs.map((c, i) => `<button class="tab" role="tab" aria-selected="${i === 0}">${c[0]}</button>`).join('')}</div>
